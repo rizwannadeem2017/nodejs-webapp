@@ -5,25 +5,25 @@ on: [pull_request]
 
 jobs:
   check-source:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: check source master
-      if: contains(fromJson('["master", "main"]'), github.base_ref) && github.head_ref != 'staging'
-      uses: actions/github-script@v6
-      with:
-        script: |
-          core.setFailed(' chenges should merge from staging')
-    - name: check source develop
-      if: github.base_ref == 'staging' && github.read_ref != 'develop'
-      uses: actions/github-script@v6
-      with:
-        script: |
-          core.setFailed(' chenges should merge from develop')
-    - name: check feature source
-      if: github.base_ref == 'deveop' && !(startWith(github.read_ref, 'feature/')) || (startWith(github.read_ref, 'bug/'))
-      uses: actions/github-script@v6
-      with:
-        script: |
-          core.setFailed(' chenges should merge from feature or bug branch')
-  
+    steps:
+      - name: check source master
+        if: contains(fromJson('["master", "main"]'), github.base_ref) && github.head_ref != 'staging'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed(' chenges should merge from staging')
+      - name: check source develop
+        if: github.base_ref == 'staging' && github.read_ref != 'develop'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed(' chenges should merge from develop')
+      - name: check feature source
+        if: github.base_ref == 'deveop' && !(startWith(github.read_ref, 'feature/')) || (startWith(github.read_ref, 'bug/'))
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed(' chenges should merge from feature or bug branch')
+    
